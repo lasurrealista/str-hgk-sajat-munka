@@ -1,4 +1,5 @@
-const userService = require('./utils')
+const { generateUserList, getUserNames } = require('./utils');
+const userService = require('./utils');
 
 const users = [
   {
@@ -16,7 +17,10 @@ const users = [
     lastName: 'Guevara',
     age: 17,
   },
-]
+];
 
-console.log(userService.generateUserList(users))
-console.log(userService.getUserNames(users))
+console.log(userService.generateUserList(users));
+console.log(userService.getUserNames(users));
+
+console.log(Object.isFrozen(getUserNames));
+console.log(Object.isFrozen(generateUserList));
