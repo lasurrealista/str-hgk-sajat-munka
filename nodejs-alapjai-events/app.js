@@ -2,6 +2,9 @@ const { createReadStream, createWriteStream } = require('fs');
 const { Transform } = require('stream');
 const path = require('path');
 
+const Logger = require('./utils');
+const logger = new Logger();
+
 // Oszály a transzformáláshoz.
 class TitleCaseStream extends Transform {
     constructor() {
@@ -35,8 +38,10 @@ const writeStream = createWriteStream(
     'utf8'
 );
 
-writeStream.on('finish', () => {
-    console.log('File transform successful.');
+writeStream.on('finish', (err) => {
+    if (err) {
+        logger.error('Transform failed')};
+    logger.success('File transform successful');
 });
 
 readStream.pipe(new TitleCaseStream()).pipe(writeStream);
