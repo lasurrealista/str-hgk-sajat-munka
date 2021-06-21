@@ -1,6 +1,6 @@
-const MoviesService = (moviesApi) => {
+const MoviesService = async (moviesApi) => {
 
-  let movies = moviesApi.get();
+  let movies = await moviesApi.get();
 
   const getAllMovies = () => movies;
 
@@ -11,24 +11,24 @@ const MoviesService = (moviesApi) => {
     return sortedMovies[sortedMovies.length - 1].id + 1;
   }
 
-  const createMovie = ({ producer, title }) => {
+  const createMovie = async ({ producer, title }) => {
     const movie = { id: generateNewMovieId(), producer, title };
     movies = [...movies, movie];
-    moviesApi.save(movies);
+    await moviesApi.save(movies);
     return movie;
   }
 
-  const editMovie = ({ id, producer, title }) => {
+  const editMovie = async ({ id, producer, title }) => {
     movies = movies.map(movie => movie.id === id 
       ? { id, producer, title } 
       : movie)
-    moviesApi.save(movies)
+    await moviesApi.save(movies)
     return findMovieById(id)
   };
 
-  const removeMovie = (id) => {
+  const removeMovie = async (id) => {
     movies = movies.filter(movie => movie.id !== id)
-    moviesApi.save(movies)
+    await moviesApi.save(movies)
   };
 
   return {

@@ -5,13 +5,15 @@ const MoviesApi = require('./movies.api');
 const MoviesService = require('./movies.service');
 
 const moviesApi = MoviesApi(dbFilePath, propName);
-const {
+( async () =>  { 
+  
+  const {
   getAllMovies,
   findMovieById,
   createMovie,
   editMovie,
   removeMovie
-} = MoviesService(moviesApi);
+} = await MoviesService(moviesApi);
 
 yargs
   .version('1.0.0')
@@ -56,6 +58,6 @@ yargs
   .locale('en')
   .strict()
   .help()
-  .parse()
-
+  .parse();
+})();
   //async-await; dbFilePath, propName
