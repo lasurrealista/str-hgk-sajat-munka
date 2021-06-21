@@ -1,6 +1,6 @@
 const yargs = require('yargs');
 const { id, producer, title } = require('./option');
-const MovieService = require('./class/movies.service');
+const MovieService = require('./class/movie.service');
 const movieService = new MovieService();
 
 yargs
