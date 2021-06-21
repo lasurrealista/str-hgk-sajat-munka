@@ -1,6 +1,6 @@
 const { readFile, writeFile } = require('fs').promises;
 
-const MoviesApi = (path, prop) => ({
+const MovieApi = (path, prop) => ({
   async get () {
     const dataString = await readFile(path);
     return JSON.parse(dataString)[prop];
@@ -11,7 +11,7 @@ const MoviesApi = (path, prop) => ({
   }
 })
 
-module.exports = MoviesApi;
+module.exports = MovieApi;
 
 //async-await, readFileSync, writeFileSync, promises
 

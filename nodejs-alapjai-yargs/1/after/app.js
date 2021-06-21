@@ -1,10 +1,10 @@
 const yargs = require('yargs');
 const { dbFilePath, propName} = require('./config');
 const { id, producer, title } = require('./option');
-const MoviesApi = require('./movies.api');
-const MoviesService = require('./movies.service');
+const MovieApi = require('./movie.api');
+const MovieService = require('./movie.service');
 
-const moviesApi = MoviesApi(dbFilePath, propName);
+const movieApi = MovieApi(dbFilePath, propName);
 ( async () =>  { 
   
   const {
@@ -13,7 +13,7 @@ const moviesApi = MoviesApi(dbFilePath, propName);
   createMovie,
   editMovie,
   removeMovie
-} = await MoviesService(moviesApi);
+} = await MovieService(movieApi);
 
 yargs
   .version('1.0.0')
