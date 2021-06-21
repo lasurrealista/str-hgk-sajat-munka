@@ -1,26 +1,26 @@
-const ProductsService = (productApi) => {
+const ProductsService = async (productApi) => {
 
-  let products = productApi.get();
+  let products = await productApi.get();
 
-  const sum = () => {
+  const sum = async () => {
     let sumProductsPrices = 0;
-    products.map( product => {
+    await products.map( product => {
       sumProductsPrices += (product.count * product.price)
     })
     return sumProductsPrices;
   };
 
-  const avg = () => {
+  const avg = async () => {
     let avgPriceCount = 0;
-    products.map( product => {
+    await products.map( product => {
       (avgPriceCount += product.price) / products.length
     })
     return avgPriceCount;
 
   };
 
-  const lessthan = (count) => {
-    return products.filter( product => product.count < count )
+  const lessthan = async (count) => {
+    return await products.filter( product => product.count < count )
   };
 
   return {

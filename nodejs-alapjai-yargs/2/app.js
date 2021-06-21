@@ -5,10 +5,12 @@ const ProductsAPI = require('./product.api');
 const ProductsService = require('./product.service');
 
 const productApi = ProductsAPI(dbFilePath, propName);
-const { 
+( async () => {
+  
+  const { 
     sum, 
     avg, 
-    lessthan } = ProductsService(productApi);
+    lessthan } = await ProductsService(productApi);
 
 yargs
   .version('1.0.0')
@@ -33,3 +35,4 @@ yargs
   .strict()
   .help()
   .parse()
+})();
