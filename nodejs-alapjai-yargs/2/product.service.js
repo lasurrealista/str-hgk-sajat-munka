@@ -1,6 +1,6 @@
-const ProductsService = (productsApi) => {
+const ProductsService = (productApi) => {
 
-  let products = productsApi.get();
+  let products = productApi.get();
 
   const sum = () => {
     let sumProductsPrices = 0;

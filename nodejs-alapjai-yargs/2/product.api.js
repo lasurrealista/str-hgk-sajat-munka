@@ -1,6 +1,6 @@
 const { readFileSync, writeFileSync } = require('fs');
 
-const ProductsApi = (path, prop) => ({
+const ProductApi = (path, prop) => ({
   get () {
     const dataString = readFileSync(path);
     return JSON.parse(dataString)[prop];
@@ -11,7 +11,7 @@ const ProductsApi = (path, prop) => ({
   }
 })
 
-module.exports = ProductsApi;
+module.exports = ProductApi;
 
 /*
 const { readFile, writeFile } = require('fs').promises;
