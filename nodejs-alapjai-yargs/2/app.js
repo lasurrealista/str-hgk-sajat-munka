@@ -1,16 +1,16 @@
 const yargs = require('yargs');
 const { count } = require('./option');
 const { dbFilePath, propName } = require('./config');
-const ProductsAPI = require('./product.api');
-const ProductsService = require('./product.service');
+const ProductAPI = require('./product.api');
+const ProductService = require('./product.service');
 
-const productApi = ProductsAPI(dbFilePath, propName);
+const productApi = ProductAPI(dbFilePath, propName);
 ( async () => {
   
   const { 
     sum, 
     avg, 
-    lessthan } = await ProductsService(productApi);
+    lessthan } = await ProductService(productApi);
 
 yargs
   .version('1.0.0')
