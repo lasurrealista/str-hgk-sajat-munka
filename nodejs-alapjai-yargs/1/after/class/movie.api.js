@@ -32,4 +32,8 @@ module.exports = class MovieAPI {
 
         return this.list;
     }
+
+    async save(data) {
+        await writeFile(this.path, JSON.stringify({ [this.prop]: data }))
+    }
 }
