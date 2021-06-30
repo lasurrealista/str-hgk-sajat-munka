@@ -39,7 +39,7 @@ db.movies.aggregate([
 //Modifying.
 db.movies.find().forEach(
     function(movie) { db.movies.update( {"_id": movie._id}, {"$set": {"category": movie.category.toUpperCase() }})}) 
-
+db.movies.updateMany( {}, [{$set: {category: {$toUpper: "$category"} }}] )
 
 db.movies.find()
 
