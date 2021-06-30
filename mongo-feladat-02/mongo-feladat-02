@@ -1,0 +1,24 @@
+db.directors.insertOne({_id: 1, name: "Steven Spielberg", birthYear: 1946, movies: []})
+
+db.directors.insertOne({_id: 2, name: "Clint Eastwood", birthYear: 1930, movies: []})
+
+db.directors.insertOne({_id: 3, name: "James Cameron", birthYear: 1954, movies: []})
+
+db.directors.updateOne({_id: 1}, {$set: {movies: [ObjectId("60db3fd060047516675deb37"), ObjectId("60db3fd060047516675deb38"), ObjectId("60db3fd060047516675deb39"), ObjectId("60db3fd060047516675deb3a")]}})
+
+db.directors.updateOne({_id: 2}, {$set: {movies: [ObjectId("60db3fd060047516675deb3b"), ObjectId("60db3fd060047516675deb3d"), ObjectId("60db3fd060047516675deb3c")]}})
+
+db.directors.updateOne({_id: 3}, {$set: {movies: [ObjectId("60db3fd060047516675deb3e"), ObjectId("60db3fd060047516675deb3f"), ObjectId("60db3fd060047516675deb40")]}})
+
+db.movies.find({}, {director: 1})
+
+db.directors.find().pretty()
+
+db.movies.updateMany({}, {$unset: {director: ""}})
+
+db.movies.find({ releaseYear: { $gt: 2010 } }) 
+
+db.movies.find({ releaseYear:{ $lte: 1990 } })
+
+db.movies.find({ $and: [ { releaseYear: { $gt: 1990 }}, {releaseYear: { $lt: 2010 }} ]})
+
