@@ -33,3 +33,21 @@ db.directors.aggregate( [ { $project : { name : 1 , movies: 1 } } ] )
 db.directors.aggregate([ {$lookup: {from: "movies", localField:"movies", foreignField:"_id", as: "moviesData" }}])
 
 db.directors.aggregate([{$match: {_id: 1}}, {$lookup: {from: "movies", localField:"movies", foreignField:"_id", as: "moviesData" }}])
+
+db.movies.aggregate(
+  { $project : { title : 1, releaseYear : 1 } }
+)
+
+db.directors.aggregate([{$match: {_id: 1}}, {$lookup: {from: "movies", localField:"movies", foreignField:"_id", as: "moviesData" }}, { $project : { title : 1, releaseYear : 1 }])
+
+db.movies.find({
+    releaseYear: {$lt: 2000},
+    $or: [
+        {category: "ROMANTIC"},
+        {category: "ACTION"}
+    ]},
+    {title: 1, category: 1, _id: 0}
+)
+
+db.directors.find({}, {name: 1, movies: 1, _id: 0})
+
