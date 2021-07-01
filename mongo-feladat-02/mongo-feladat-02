@@ -22,3 +22,14 @@ db.movies.find({ releaseYear:{ $lte: 1990 } })
 
 db.movies.find({ $and: [ { releaseYear: { $gt: 1990 }}, {releaseYear: { $lt: 2010 }} ]})
 
+db.movies.find({ $and: [ { releaseYear: { $gt: 1990 }}, {releaseYear: { $lt: 2010 }} ]})
+
+db.movies.find({ category: "ACTION",  $and: [ { releaseYear: { $gt: 1990 }}, {releaseYear: { $lt: 2010 }} ]})
+
+db.movies.find( { category: { $ne: "FANTASY" } } )
+
+db.directors.aggregate( [ { $project : { name : 1 , movies: 1 } } ] )
+
+db.directors.aggregate([ {$lookup: {from: "movies", localField:"movies", foreignField:"_id", as: "moviesData" }}])
+
+db.directors.aggregate([{$match: {_id: 1}}, {$lookup: {from: "movies", localField:"movies", foreignField:"_id", as: "moviesData" }}])
