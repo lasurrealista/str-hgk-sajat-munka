@@ -1,0 +1,116 @@
+db.createCollection("cinemas", {
+  validator: {
+    $jsonSchema: {      
+      properties: {
+        _id: { bsonType: "int"},
+        name: { bsonType: "string", pattern: "[A-Za-z0-9 ]"},
+        movies: { bsonType: "array"},
+        address: {
+            bsonType: "object",
+            properties: {
+                city: { bsonType: "string"}
+            }
+        }        
+      },
+      required: ["_id", "name", "movies", "address"]
+    }
+  }
+})
+
+db.cinemas.insertMany([
+    {_id: NumberInt(1), 
+    name: "Galaxy", 
+    movies: [
+        ObjectId("60db3fd060047516675deb37"), 
+        ObjectId("60db3fd060047516675deb38"), 
+        ObjectId("60db3fd060047516675deb39")
+    ], 
+    address: {city: "Miami"}},
+    
+    {_id: NumberInt(2), 
+    name: "Orion", 
+    movies: [
+            ObjectId("60db3fd060047516675deb3b"), 
+            ObjectId("60db3fd060047516675deb3d"), 
+            ObjectId("60db3fd060047516675deb3c")
+    ], 
+    address: {city: "Bangkok"}},
+    
+    {_id: NumberInt(3), 
+    name: "Lyra", 
+    movies: [
+            ObjectId("60db3fd060047516675deb3e"), 
+            ObjectId("60db3fd060047516675deb3f"), 
+            ObjectId("60db3fd060047516675deb40")
+    ], 
+    address: {city: "Chiang Mai"}}    
+])
+
+db.cinemas.aggregate([
+  {
+    $lookup: {
+      from: "movies",
+      localField: "movies",
+      foreignField: "_id",
+      as: "moviesShowingNow"
+    }
+  },
+  { $limit: 1 }
+])
+
+db.cinemas.aggregate([
+  {
+    $lookup: {
+      from: "movies",
+      localField: "movies",
+      foreignField: "_id",
+      as: "moviesShowingNow"
+    }
+  },
+  { $project: { "_id": 0, "Titles": "$moviesShowingNow.title", "Years of Release": "$moviesShowingNow.releaseYear", "Categories": "$moviesShowingNow.category" }}  
+])
+
+db.cinemas.aggregate([
+  {
+    $lookup: {
+      from: "movies",
+      localField: "movies",
+      foreignField: "_id",
+      as: "movies"
+    }
+  },
+  {$project: { _id: 0, movies: 1 }}  
+])
+
+db.directors.aggregate([
+  {
+    $lookup: {
+      from: "movies",
+      localField: "movies",
+      foreignField: "_id",
+      as: "moviesDirected"
+    }
+  },
+  { $match: { name: "Clint Eastwood" }},
+  { $project: { _id: 0, moviesDirected: 1 }}
+])
+
+db.directors.aggregate([
+  {
+    $lookup: {
+      from: "movies",
+      localField: "movies",
+      foreignField: "_id",
+      as: "moviesTitles"
+    }
+  },
+  { $match: { name: "Steven Spielberg" }},
+  {$project: { _id: 0, name: 1, "moviesTitles.title": 1}}
+])
+
+db.movies.aggregate([    
+  { $project: { _id: 0, title: 1, rateAvg: { $avg: "$ratings" } }},
+  { $sort: { rateAvg: -1 } },
+  { $limit: 1 }
+])
+
