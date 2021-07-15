@@ -13,6 +13,9 @@ paths:
         '200':
           description: Number of patients returned successfully
           content:
+            application/json:
+              schema:
+                type: integer
         '500':
           description: Internal server error
           content:
@@ -26,6 +29,11 @@ paths:
         '200':
           description: The list of vaccinated people returned successfully
           content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patient'
         '500':
           description: Internal server error
           content:
