@@ -1,0 +1,11 @@
+npm i -g express-generator
+
+express api-feladat-01 --view=pug
+
+cd api-feladat-01
+
+npm install      
+
+SET DEBUG=api-feladat-01:*
+
+npm start
