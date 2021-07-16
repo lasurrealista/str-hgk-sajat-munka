@@ -7,6 +7,8 @@ const jsonPath = join('db','patients.json');
 const patients = require('../db/patients.json');
 // const patients = require('../db/data');
 
+const Patient = require('../models/patient.model');
+
 //http-errors: npm i http-errors -S 
 const createError = require("http-errors");
 
