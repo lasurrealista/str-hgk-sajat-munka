@@ -7,8 +7,6 @@ const jsonPath = join('db','patients.json');
 const patients = require('../db/patients.json');
 // const patients = require('../db/data');
 
-const patientService = require('../service/patient.service');
-
 //http-errors: npm i http-errors -S 
 const createError = require("http-errors");
 
@@ -16,6 +14,15 @@ const createError = require("http-errors");
 router.get('/', async (req, res, next) => {
     //const patients = await patientService.read();
     res.json(patients);
+});
+
+// http://localhost:3000/patients/count
+router.get('/count', async (req, res, next) => {
+    //const patients = await patientService.read();
+    const output = {
+        count: patients.filter( p => p.vaccine !== 'none' ).length
+    };
+    res.json(output);
 });
 
 // Get one patient
@@ -32,15 +39,6 @@ router.get('/:id', async (req, res, next) => {
      res.json(patient);
 
    });
-
-// http://localhost:3000/patients/count
-router.get('/count', async (req, res, next) => {
-    //const patients = await patientService.read();
-    const output = {
-        count: patients.filter( p => p.vaccine !== 'none' ).length
-    };
-    res.json(output);
-});
 
 // http://localhost:3000/patients/vaccinated
 router.get('/vaccinated', async (req, res, next) => {
