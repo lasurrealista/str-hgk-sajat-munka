@@ -18,6 +18,21 @@ router.get('/', async (req, res, next) => {
     res.json(patients);
 });
 
+// Get one patient
+router.get('/:id', async (req, res, next) => {
+
+    // const patients = await patientService.read();
+     const { id } = req.params;
+     const patient = patients.find( patient => patient.id === parseInt(id, 10));
+
+     if (!patient) {
+         return next(new createError.NotFound("Invalid Id, patient not found"));
+     }
+
+     res.json(patient);
+
+   });
+
 // http://localhost:3000/patients/count
 router.get('/count', async (req, res, next) => {
     //const patients = await patientService.read();
