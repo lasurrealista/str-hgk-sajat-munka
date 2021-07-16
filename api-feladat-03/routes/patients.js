@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const fsp = require('fs').promises;
+const { join } = require('path');
 
+const jsonPath = join('db','patients.json');
 const patients = require('../db/patients.json');
 // const patients = require('../db/data');
 
@@ -15,28 +18,12 @@ router.get('/', async (req, res, next) => {
     res.json(patients);
 });
 
-// Get one patient
-router.get('/:id', async (req, res, next) => {
-
-    // const patients = await patientService.read();
-     const { id } = req.params;
-     const patient = patients.find( patient => patient.id === parseInt(id, 10));
-   
-     if (!patient) {
-         return next(new createError.NotFound("Invalid Id, patient not found"));
-     }
- 
-     res.json(patient);
-     
-   });
-
 // http://localhost:3000/patients/count
 router.get('/count', async (req, res, next) => {
     //const patients = await patientService.read();
     const output = {
         count: patients.filter( p => p.vaccine !== 'none' ).length
     };
-
     res.json(output);
 });
 
@@ -74,7 +61,7 @@ fetch('http://localhost:3000/patients', {
 }).then( r => r.json() )
 .then( d => console.log(d) );
 */
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
 
     const { firstName, lastName, vaccine } = req.body;
 
@@ -87,8 +74,12 @@ router.post('/', (req, res, next) => {
     const newPatient = req.body;
     newPatient.id = patients[patients.length - 1].id + 1;
     patients.push(newPatient);
+
+    await fsp.writeFile(jsonPath, JSON.stringify(patients));
+    
     res.status(201);
     res.json(newPatient);
+
 });
 
 // Update

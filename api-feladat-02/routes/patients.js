@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const fsp = require('fs').promises;
+const { join } = require('path');
 
+const jsonPath = join('db','patients.json');
 const patients = require('../db/patients.json');
 // const patients = require('../db/data');
 
@@ -58,7 +61,7 @@ fetch('http://localhost:3000/patients', {
 }).then( r => r.json() )
 .then( d => console.log(d) );
 */
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
 
     const { firstName, lastName, vaccine } = req.body;
 
@@ -71,8 +74,12 @@ router.post('/', (req, res, next) => {
     const newPatient = req.body;
     newPatient.id = patients[patients.length - 1].id + 1;
     patients.push(newPatient);
+
+    await fsp.writeFile(jsonPath, JSON.stringify(patients));
+    
     res.status(201);
     res.json(newPatient);
+
 });
 
 // Update
