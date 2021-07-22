@@ -25,6 +25,15 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+// Authentication
+const authenticateJwt = require('./auth/authenticate');
+const adminOnly = require('./auth/adminOnly');
+const authHandlers = require('./auth/authHandlers');
+
+app.post('/login', authHandlers.login);
+app.post('/refresh', authHandlers.refresh);
+app.post('/logout', authHandlers.logout);
+
 // Swagger
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
@@ -42,9 +51,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
-app.use('/', indexRouter);
+app.use('/', authenticateJwt, adminOnly, indexRouter);
 app.use('/users', usersRouter);
-app.use('/patients', patientsRouter);
+app.use('/patients', authenticateJwt, patientsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

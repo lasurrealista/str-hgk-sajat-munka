@@ -12,6 +12,9 @@ const Patient = require('../models/patient.model');
 //http-errors: npm i http-errors -S 
 const createError = require("http-errors");
 
+const authenticateJwt = require('./auth/authenticate');
+const adminOnly = require('./auth/adminOnly');
+
 /* GET home page. */
 router.get('/', async (req, res, next) => {
     const patients = await Patient.find();
@@ -19,13 +22,13 @@ router.get('/', async (req, res, next) => {
 });
 
 // http://localhost:3000/patients/count
-router.get('/count', async (req, res, next) => {
+router.get('/count', authenticateJwt, async (req, res, next) => {
     const patients = await Patient.find();
     res.json(patients.length);
 });
 
 // http://localhost:3000/patients/vaccinated
-router.get('/vaccinated', async (req, res, next) => {
+router.get('/vaccinated', authenticateJwt, adminOnly, async (req, res, next) => {
     const vaccinatedPatients = await Patient.find({ vaccine: { $nin: ['', null] } }).exec();
     res.json(vaccinatedPatients);
 });
