@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const fsp = require('fs').promises;
-const { join } = require('path');
+// const { join } = require('path');
 
-const jsonPath = join('db','patients.json');
-const patients = require('../db/patients.json');
+//const jsonPath = join('db','patients.json');
+//const patients = require('../db/patients.json');
 // const patients = require('../db/data');
 
 const Patient = require('../models/patient.model');
@@ -14,25 +14,27 @@ const createError = require("http-errors");
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
-    //const patients = await patientService.read();
+    const patients = await Patient.find();
     res.json(patients);
 });
 
 // http://localhost:3000/patients/count
 router.get('/count', async (req, res, next) => {
-    //const patients = await patientService.read();
-    const output = {
-        count: patients.filter( p => p.vaccine !== 'none' ).length
-    };
-    res.json(output);
+    const patients = await Patient.find();
+    res.json(patients.length);
 });
 
+// http://localhost:3000/patients/vaccinated
+router.get('/vaccinated', async (req, res, next) => {
+    const vaccinatedPatients = await Patient.find({ vaccine: { $nin: ['', null] } }).exec();
+    res.json(vaccinatedPatients);
+});
+
+/*
 // Get one patient
 router.get('/:id', async (req, res, next) => {
 
-    // const patients = await patientService.read();
-     const { id } = req.params;
-     const patient = patients.find( patient => patient.id === parseInt(id, 10));
+    const patient = await Patient.findById(req.params.id);
 
      if (!patient) {
          return next(new createError.NotFound("Invalid Id, patient not found"));
@@ -42,17 +44,12 @@ router.get('/:id', async (req, res, next) => {
 
    });
 
-// http://localhost:3000/patients/vaccinated
-router.get('/vaccinated', async (req, res, next) => {
-    //const patients = await patientService.read();
-    const vaccinatedPatients = patients.filter( (patient) => patient.vaccine );
-    res.json(vaccinatedPatients);
-  });
 
 // http://localhost:3000/patients/1/vaccinated
 router.get('/:id/vaccinated', async (req, res, next) => {
 
-   // const patients = await patientService.read();
+    const patient = await Patient.findById(req.params.id);
+
     const { id } = req.params;
     const patient = patients.find( patient => patient.id === parseInt(id, 10));
   
@@ -76,6 +73,7 @@ fetch('http://localhost:3000/patients', {
 }).then( r => r.json() )
 .then( d => console.log(d) );
 */
+/*
 router.post('/', async (req, res, next) => {
 
     const { firstName, lastName, vaccine } = req.body;
@@ -137,6 +135,6 @@ router.delete('/:vaccine', (req, res,next) => {
 
     res.json({});
 });
-
+*/
 
 module.exports = router;
