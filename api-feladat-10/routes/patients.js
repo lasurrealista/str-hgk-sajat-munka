@@ -12,8 +12,8 @@ const Patient = require('../models/patient.model');
 //http-errors: npm i http-errors -S 
 const createError = require("http-errors");
 
-const authenticateJwt = require('./auth/authenticate');
-const adminOnly = require('./auth/adminOnly');
+const authenticateJwt = require('../auth/authenticate');
+const adminOnly = require('../auth/adminOnly');
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
