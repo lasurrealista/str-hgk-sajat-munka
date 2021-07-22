@@ -26,7 +26,7 @@ router.get('/count', async (req, res, next) => {
 
 // http://localhost:3000/patients/vaccinated
 router.get('/vaccinated', async (req, res, next) => {
-    const vaccinatedPatients = await Patient.find({ 'vaccine.count': { $ne: 0 } });
+    const vaccinatedPatients = await Patient.find({ vaccine: { $nin: ['', null] } }).exec();
     res.json(vaccinatedPatients);
 });
 
