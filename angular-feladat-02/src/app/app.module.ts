@@ -13,6 +13,8 @@ import { UsersComponent } from './page/users/users.component';
 import { UserEditComponent } from './page/user-edit/user-edit.component';
 import { ForbiddenComponent } from './page/forbidden/forbidden.component';
 import { JwtInterceptorService } from './service/jwt-interceptor.service';
+import { MoviesComponent } from './page/movies/movies.component';
+import { MovieEditorComponent } from './page/movie-editor/movie-editor.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { JwtInterceptorService } from './service/jwt-interceptor.service';
     LoginComponent,
     UsersComponent,
     UserEditComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    MoviesComponent,
+    MovieEditorComponent
   ],
   imports: [
     BrowserModule,

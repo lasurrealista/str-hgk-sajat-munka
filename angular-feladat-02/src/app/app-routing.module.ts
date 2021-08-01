@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ForbiddenComponent } from './page/forbidden/forbidden.component';
 import { HomeComponent } from './page/home/home.component';
 import { LoginComponent } from './page/login/login.component';
+import { MovieEditorComponent } from './page/movie-editor/movie-editor.component';
+import { MoviesComponent } from './page/movies/movies.component';
 import { UserEditComponent } from './page/user-edit/user-edit.component';
 import { UsersComponent } from './page/users/users.component';
 import { AuthGuardService } from './service/auth-guard.service';
@@ -33,6 +35,14 @@ const routes: Routes = [
     data: {
       expectedRole: 3,
     }
+  },
+  {
+    path: 'movies',
+    component: MoviesComponent,
+  },
+  {
+    path: 'movies/:id',
+    component: MovieEditorComponent,
   },
   {
     path: 'forbidden',
