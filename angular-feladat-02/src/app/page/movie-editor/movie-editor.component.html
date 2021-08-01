@@ -1,1 +1,22 @@
-<p>movie-editor works!</p>
+
+<div class="col-6 offset-3 mt-5">
+  <div class="mb-3">
+    <label for="id" class="form-label">#</label>
+    <input type="number" class="form-control" id="id" [value]="(movie$ | async)?.id" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title" [value]="(movie$ | async)?.title">
+  </div>
+  <div class="mb-3">
+    <label for="style" class="form-label">Category</label>
+    <input type="text" class="form-control" id="category" [value]="(movie$ | async)?.category">
+  </div>
+  <div class="mb-3">
+    <label for="year" class="form-label">Director</label>
+    <input type="text" class="form-control" id="director" [value]="(movie$ | async)?.director">
+  </div>
+  <div class="mb-3 text-center mt-4">
+    <button class="btn btn-primary" (click)="onClickNavigateBack()">Go Back</button>
+  </div>
+</div>
