@@ -6,6 +6,7 @@ import { LoginComponent } from './page/login/login.component';
 import { UserEditComponent } from './page/user-edit/user-edit.component';
 import { UsersComponent } from './page/users/users.component';
 import { AuthGuardService } from './service/auth-guard.service';
+import { RoleGuardService } from './service/role-guard.service';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService, RoleGuardService],
     data: {
       expectedRole: 2,
     }
@@ -28,7 +29,7 @@ const routes: Routes = [
   {
     path: 'user/edit/:id',
     component: UserEditComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService, RoleGuardService],
     data: {
       expectedRole: 3,
     }
