@@ -12,5 +12,13 @@ export class ConfigService {
     {label: 'Users', href: '/users', role: 2},
   ];
 
+  userColumns: {key: string, label: string}[] = [
+    {key: 'id', label: '#'},
+    {key: 'first_name', label: 'First name'},
+    {key: 'last_name', label: 'Last name'},
+    {key: 'email', label: 'Email'},
+    {key: 'role', label: 'Role'},
+  ];
+
   constructor() { }
 }
