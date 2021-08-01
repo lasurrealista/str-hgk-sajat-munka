@@ -14,7 +14,10 @@ import { UserEditComponent } from './page/user-edit/user-edit.component';
 import { ForbiddenComponent } from './page/forbidden/forbidden.component';
 import { JwtInterceptorService } from './service/jwt-interceptor.service';
 import { MoviesComponent } from './page/movies/movies.component';
-import { MovieEditorComponent } from './page/movie-editor/movie-editor.component';
+import { MovieEditorComponent } from './page/movie-editor/movie-editor.component'
+
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { MovieEditorComponent } from './page/movie-editor/movie-editor.component
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    StoreModule.forRoot({ moviess: MovieReducer }),
+    EffectsModule.forRoot([ MovieEffect ]),
+
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true},
