@@ -12,11 +12,6 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class UserEditComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {}
-
-  /*
   user: User = new User();
   serverError = '';
 
@@ -53,6 +48,6 @@ export class UserEditComponent implements OnInit {
         }
       );
   }
-  */
+
 }
 
